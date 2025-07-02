@@ -13,7 +13,7 @@ function App() {
       <Route path="/auth" element={<Auth />} />
       <Route path="/dashboard/*" element={token ? <Dashboard /> : <Navigate to="/auth" />} />
       <Route path="/homepage" element={<Homepage />} />
-      <Route path='/orders' element ={OrdersPage} />
+      <Route path='/orders' element ={<OrdersPage />} />
       <Route path="*" element={<div className="text-center mt-20 text-red-500 text-xl">404 - Page Not Found</div>} />
     </Routes>
   );
