@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import DisplayProduct from '../hooks/DisplayProduct';
 import { getAllProducts } from '../api/ProductsApi';
 import '../index.css'
+import GenHeader from '../components/GenHeader';
+import Footer from '../components/Footer';
 
 export default function Homepage() {
-  const [cartCount, setCartCount] = useState(0);
+  const [cartCount, setCartCount] = useState(localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')).length : 0 );
   const [showModal, setShowModal] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [showConfirmation, setShowConfirmation] = useState(false);
@@ -16,6 +18,7 @@ export default function Homepage() {
     date: '',
     message: ''
   });
+  
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -26,7 +29,34 @@ export default function Homepage() {
   }, []);
 
   const handleAddToCart = (product) => {
-    setCartCount(cartCount + 1);
+    let isNew = true;
+    let updatedItems = [];
+    let newItem = []
+    try {
+      updatedItems = JSON.parse(localStorage.getItem('cart'));
+      updatedItems.map((item)=>{
+        if(item._id === product._id){
+          isNew = false;
+          item.quantity = item.quantity+1;
+        }
+      });
+    } catch (error) {
+      updatedItems = localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')): [];
+    }
+    if(isNew){
+      newItem = {
+          _id: product._id,
+          name: product.title,
+          price: product.price,
+          quantity: 1,
+          image: product.imaga,
+          category: product.category
+      }  
+      updatedItems.push(newItem);
+    };
+    localStorage.setItem('cart', JSON.stringify(updatedItems));
+    console.log(JSON.parse(localStorage.getItem('cart')));
+    setCartCount(JSON.parse(localStorage.getItem('cart')).length);
     showNotification(`${product.title} added to cart!`);
   };
 
@@ -100,28 +130,7 @@ export default function Homepage() {
 
   return (
     <div>
-      <header className="header">
-        <nav className="navbar">
-          <a href="#" className="logo hidden lg:block">Shop<span>Now</span></a>
-          <div className="nav-links">
-            <a href="#">Home</a>
-            <a href="#products">Products</a>
-            <a href="#">About</a>
-            <a href="#">Contact</a>
-          </div>
-          <div className="flex gap-2 items-center justify-center px-4 py-2">
-            <select name="" id="" className='text-center font-semibold rounded-md'>
-                <option value="login">login</option>
-                <option value="signup">signup</option>
-            </select>
-            <div className='relative'>
-                <i className="fas fa-shopping-cart"></i>
-            <span className="cart-count">{cartCount}</span>
-            </div>
-          </div>
-        </nav>
-      </header>
-
+      <GenHeader cartCount={ cartCount }/>
       <section className="hero">
         <h1>Discover Amazing Products</h1>
         <p>Browse our collection of high-quality products and book your favorites today. Fast delivery and excellent customer service guaranteed.</p>
@@ -170,6 +179,7 @@ export default function Homepage() {
           </div>
         </div>
       )}
+      <Footer />
     </div>
   );
 }

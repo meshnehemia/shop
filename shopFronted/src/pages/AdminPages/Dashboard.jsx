@@ -127,7 +127,7 @@ export default function Dashboard() {
                     <div class="flex justify-between">
                         <div>
                             <p class="text-gray-500">Total Orders</p>
-                            <p class="text-3xl font-bold mt-2">1,248</p>
+                            <p class="text-3xl font-bold mt-2">{ dashboardData?.newOrdersCount }</p>
                             <p class="text-green-500 text-sm mt-1 flex items-center">
                                 {/* <i class="fas fa-arrow-up mr-1"></i>  */}
                                 past 7 days
@@ -224,22 +224,28 @@ export default function Dashboard() {
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
-                                <tr class="hover:bg-gray-50">
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="text-sm font-medium text-gray-900">#ORD-1001</div>
-                                        <div class="text-sm text-gray-500">May 15, 2023</div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="text-sm font-medium text-gray-900">John Doe</div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Delivered</span>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="text-sm text-gray-900">$199.99</div>
-                                    </td>
-                                </tr>
-                                <tr class="hover:bg-gray-50">
+                            { dashboardData?.recentOrders?.map((order)=>(
+                                <tr className="hover:bg-gray-50">
+                                  <td className="px-6 py-4 whitespace-nowrap">
+                                      <div className="text-sm font-medium text-gray-900">{ order.orderId }</div>
+                                      <div className="text-sm text-gray-500">{ order.createdAt }</div>
+                                  </td>
+                                  <td className="px-6 py-4 whitespace-nowrap">
+                                      <div className="text-sm font-medium text-gray-900">John Doe</div>
+                                  </td>
+                                  <td className="px-6 py-4 whitespace-nowrap">
+                                        <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${ 
+                                          order.orderStatus === "completed" ? "bg-green-100 text-green-800" :
+                                          order.orderStatus === "shipped" ? "bg-blue-100 text-blue-800" : 
+                                          order.orderStatus === "processing" ? "bg-yellow-100 text-yellow-800" :" bg-red-100 text-red-800"} `}>{order.orderStatus}</span>
+                                  </td>
+                                  <td className="px-6 py-4 whitespace-nowrap">
+                                      <div className="text-sm text-gray-900">{ order.paymentInfo.amountPaid }</div>
+                                  </td>
+                              </tr>
+                            )) }
+                                
+                                {/* <tr class="hover:bg-gray-50">
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="text-sm font-medium text-gray-900">#ORD-1002</div>
                                         <div class="text-sm text-gray-500">May 14, 2023</div>
@@ -268,7 +274,7 @@ export default function Dashboard() {
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="text-sm text-gray-900">$899.99</div>
                                     </td>
-                                </tr>
+                                </tr> */}
                             </tbody>
                         </table>
                     </div>

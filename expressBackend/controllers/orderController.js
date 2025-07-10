@@ -50,7 +50,11 @@ exports.createOrder = async (req, res) => {
       console.log("→ Adding item:", {
         name: product.name,
         productId: item.product,
-        quantity: item.quantity
+        quantity: item.quantity,
+        price:calculatedItemsPrice,
+        productPrice : product.price,
+
+
       });
 
       orderItems.push({
@@ -260,6 +264,11 @@ exports.getOrders = async (req, res) => {
   try {
     const orders = await Order.find()
       .populate('user', 'firstname lastname username email createdAt lastLogin') // Optional: populate user info
+      .populate({
+        path: 'items.productId',
+        select: 'title price image description category',
+        model: 'Product' // Make sure this matches your Product model name
+      })
       .sort({ createdAt: -1 }); // Sort newest first
 
     res.status(200).json({

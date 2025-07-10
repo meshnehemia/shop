@@ -4,6 +4,7 @@ import Auth from './pages/auth';
 import Dashboard from './pages/Dashboard';
 import Homepage from './pages/homepage';
 import OrdersPage from './pages/UserPages/OrdersPages';
+import CartPage from './pages/UserPages/UserCart';
 
 function App() {
   const token = localStorage.getItem('token');
@@ -14,6 +15,7 @@ function App() {
       <Route path="/dashboard/*" element={token ? <Dashboard /> : <Navigate to="/auth" />} />
       <Route path="/homepage" element={<Homepage />} />
       <Route path='/orders' element ={<OrdersPage />} />
+      <Route path='/cart' element = {<CartPage />} />
       <Route path="*" element={<div className="text-center mt-20 text-red-500 text-xl">404 - Page Not Found</div>} />
     </Routes>
   );

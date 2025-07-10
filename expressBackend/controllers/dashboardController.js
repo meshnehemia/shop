@@ -1,6 +1,7 @@
 // 📁 controllers/dashboardController.js
 const Product = require('../models/products');
 const Customer = require('../models/user');
+const Orders = require('../models/orders');
 const Booking = require('../models/bookings');
 
 exports.getDashboardData = async (req, res) => {
@@ -14,6 +15,9 @@ exports.getDashboardData = async (req, res) => {
 
     // New customers (last 7 days)
     const newCustomersCount = await Customer.countDocuments({ createdAt: { $gte: past7Days } });
+    
+    //orders past 7 days 
+    const newOrdersCount = await Orders.countDocuments({createdAt : {$gte: past7Days}})
 
     // Bookings in past 7 days
     const recentBookingsCount = await Booking.countDocuments({ bookedAt: { $gte: past7Days } });
@@ -24,12 +28,16 @@ exports.getDashboardData = async (req, res) => {
     // Recent 5 customers
     const recentCustomers = await Customer.find().sort({ joined: -1 }).limit(5);
 
+    // recent 3 orders
+    const recentOrders = await Orders.find().sort({joined : -1}).limit(3);
     res.json({
       totalAsset,
       newCustomersCount,
+      newOrdersCount,
       recentBookingsCount,
       recentBookings,
-      recentCustomers
+      recentCustomers,
+      recentOrders
     });
   } catch (err) {
     res.status(500).json({ error: 'Failed to load dashboard data', details: err.message });
