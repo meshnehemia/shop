@@ -26,7 +26,7 @@ function App() {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      const data = await getAllProducts(); // get from API
+      const data = await getAllProducts(); // get from AP
       setProductsData(data);
     };
     fetchProducts();
