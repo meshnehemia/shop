@@ -1,6 +1,7 @@
 import { useState } from "react";
+import Products from "../pages/UserPages/Products";
 
-const GenHeader = ({cartCount}) =>{
+const GenHeader = ({ cartCount }) =>{
     // const [cartCount, setCartCount] = useState(0);
     return(
     <header className="header">
@@ -8,7 +9,7 @@ const GenHeader = ({cartCount}) =>{
           <a href="/homepage" className="logo hidden lg:block">Shop<span>Now</span></a>
           <div className="nav-links">
             <a href="/">Home</a>
-            <a href="#products">Products</a>
+            <a href="/userProducts">Products</a>
             <a href="#">About</a>
             <a href="#">Contact</a>
           </div>
