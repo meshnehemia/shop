@@ -3,7 +3,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Auth from './pages/Auth';
 import Dashboard from './pages/Dashboard';
-import Homepage from './pages/homepage';
+import Homepage from './pages/Homepage';
 import OrdersPage from './pages/UserPages/OrdersPages';
 import CartPage from './pages/UserPages/UserCart';
 import Products from './pages/UserPages/Products';
