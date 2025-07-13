@@ -1,7 +1,7 @@
 // src/App.jsx
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import Auth from './pages/auth';
+import Auth from './pages/Auth';
 import Dashboard from './pages/Dashboard';
 import Homepage from './pages/homepage';
 import OrdersPage from './pages/UserPages/OrdersPages';
